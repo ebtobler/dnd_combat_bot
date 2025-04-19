@@ -1,7 +1,7 @@
 from unittest import TestCase
 from unittest.mock import patch
 
-from dndbot.battle import Battle
+from dndbot.battle.battle import Battle
 from dndbot.characters.enemies.enemy_character import EnemyCharacter
 from dndbot.characters.players.player_character import PlayerCharacter
 from dndbot.dice.dice import Dice

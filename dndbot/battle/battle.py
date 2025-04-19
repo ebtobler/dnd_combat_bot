@@ -11,5 +11,5 @@ class Battle:
         self.combatants: list[Combatant] = players + enemies
         initiatives = [(combatant.roll_initiative(), combatant) for combatant in self.combatants]
         initiatives.sort(reverse=True)
-        print(initiatives)
         self.turn_order = [combatant[1] for combatant in initiatives]
+
