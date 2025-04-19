@@ -1,0 +1,67 @@
+{
+  "name": "Jorge",
+  "AC": 17,
+  "HP_Max": 24,
+  "HP": 24,
+  "Temp_HP": 0,
+  "Initiative": 2,
+  "Speed": 30,
+  "Proficiency_Bonus": 2,
+  "Spell_DC": -1,
+
+  "Ability_Scores":
+  {
+    "STR": 16, "STR_mod": 3,
+    "DEX": 14, "DEX_mod": 2,
+    "CON": 16, "CON_mod": 3, 
+    "INT": 9, "INT_mod": -1,
+    "WIS": 12, "WIS_mod": 1,
+    "CHA": 10, "CHA_mod": 0
+  },
+  "Saving_Throws": 
+  { 
+    "STR": 5, "DEX": 2,  "CON": 5,  "INT": -1,  "WIS": 1,  "CHA": 0
+  },
+
+  "Actions": 
+  [
+    "Melee Weapon Attack: Handaxe. +3 to hit, reach 5 ft., one target. Hit: 1d6 + 3 slashing", 
+    "Melee Weapon Attack: Shield Bash. +5 to hit, reach 5 ft. one target. Hit: 1d4 + 3 bludgeoning"
+  ],
+  "Bonus_Actions": 
+  [
+    "Rage."
+  ],
+
+  "Spell_Slots":
+  {
+    "1": 0, "2": 0, "3": 0, "4": 0, "5": 0, "6": 0, "7": 0, "8": 0, "9": 0
+  },
+
+  "Spells":
+  {
+    "0": ["Fire Bolt"], "1": [], "2": [], "3": [], "4": [], "5": [], "6": [], "7": [], "8": [], "9": []
+  },
+
+  "Skills": 
+  {
+    "Acrobatics": 2,
+    "Animal Handling": 3,
+    "Arcana": -1,
+    "Athletics": 5,
+    "Deception": 0,
+    "History": -1,
+    "Insight": 1,
+    "Intimidation": 0,
+    "Investigation": -1,
+    "Medicine": 1,
+    "Nature": -1,
+    "Perception": 3,
+    "Performance": 0,
+    "Persuasion": 0,
+    "Religion": -1,
+    "Sleight_of_Hand": 2,
+    "Stealth": 2,
+    "Survival": 3
+  }
+}
