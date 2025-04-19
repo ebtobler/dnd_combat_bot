@@ -1,7 +1,11 @@
+from abc import ABC
 from collections.abc import MutableMapping
 
+from dndbot.characters.combatant import Combatant
+from dndbot.dice.dice import Dice
 
-class EnemyCharacter(MutableMapping):
+
+class EnemyCharacter(Combatant, ABC):
 
     def __init__(self, stats: dict):
         self.stats = stats
@@ -20,3 +24,10 @@ class EnemyCharacter(MutableMapping):
 
     def __iter__(self):
         return iter(self.stats)
+
+    def __repr__(self):
+        return self.stats['name']
+
+    def roll_initiative(self):
+        return next(iter(Dice.d20(1))) + self.stats['Initiative']
+
