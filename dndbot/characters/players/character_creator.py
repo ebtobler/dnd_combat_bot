@@ -5,7 +5,7 @@ from json import dump
 class CharacterCreator:
 
     @staticmethod
-    def get_stat_group(attr_group: list[str]) -> dict:
+    def _get_stat_group(attr_group: list[str]) -> dict:
         attrs = {}
         for field in attr_group:
             user_input = input(f'{field}: ')
@@ -16,20 +16,20 @@ class CharacterCreator:
 
     @staticmethod
     def get_stats_from_user() -> PlayerCharacter:
-        name = ['Name']
-        armor_class = ['Armor Class']
-        max_hp = ['Max HP']
-        initiative = ['Initiative']
-        speed = ['Speed']
-        prof_bonus = ['Proficiency Bonus']
-        spell_dc = ['Spell DC']
-        ability_scores = ['Strength, mod', 'Dexterity, mod', 'Constitution, mod',
-                      'Intelligence, mod', 'Wisdom, mod', 'Charisma, mod']
-        saves = ['Str save', 'Dex save', 'Con save', 'Int save', 'Wis save', 'Cha save']
-        actions = ['Actions']
-        bonus_actions = ['Bonus Actions']
-        spell_slots = ['lvl 1 spell slots', 'lvl 2 spell slots', 'lvl 3 spell slots']
-        spells = ['Cantrips', 'lvl 1 spells', 'lvl 2 spells', 'lvl 3 spells']
+        name = tuple(['Name'])
+        armor_class = tuple(['Armor Class'])
+        max_hp = tuple(['Max HP'])
+        initiative = tuple(['Initiative'])
+        speed = tuple(['Speed'])
+        prof_bonus = tuple(['Proficiency Bonus'])
+        spell_dc = tuple(['Spell DC'])
+        ability_scores = tuple(['Strength, mod', 'Dexterity, mod', 'Constitution, mod',
+                      'Intelligence, mod', 'Wisdom, mod', 'Charisma, mod'])
+        saves = tuple(['Str save', 'Dex save', 'Con save', 'Int save', 'Wis save', 'Cha save'])
+        actions = tuple(['Actions'])
+        bonus_actions = tuple(['Bonus Actions'])
+        spell_slots = tuple(['lvl 1 spell slots', 'lvl 2 spell slots', 'lvl 3 spell slots'])
+        spells = tuple(['Cantrips', 'lvl 1 spells', 'lvl 2 spells', 'lvl 3 spells'])
 
         group_key = {
             name: 'name',
@@ -54,7 +54,7 @@ class CharacterCreator:
 
         print("Creating a new character (type 'x' to exit):")
         for group in to_read:
-            value = CharacterCreator.get_stat_group(group)
+            value = CharacterCreator._get_stat_group(group)
             if len(value) == 0:
                 return PlayerCharacter({})
 
@@ -65,7 +65,7 @@ class CharacterCreator:
         return PlayerCharacter(stats)
 
     @staticmethod
-    def dump_character_to_json(char_stats: PlayerCharacter):
-        character_file = path.join(path.abspath(__file__), '..', '..', '..', 'stats', 'players', f'{char_stats["name"]}.json')
+    def dump_character_to_json(character: PlayerCharacter):
+        character_file = path.join(path.dirname(__file__), '..', '..', '..', 'stats', 'players', f'{character["name"]}.json')
         with open(character_file, 'w') as f:
-            dump(char_stats, f, indent=2)
+            dump(character.stats, f, indent=2)
