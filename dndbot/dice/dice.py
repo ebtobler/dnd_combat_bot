@@ -1,7 +1,7 @@
 from random import randint
 
-
 class Dice:
+
     @staticmethod
     def d100(n: int):
         return [randint(1, 100) for _ in range(n)]
@@ -29,3 +29,7 @@ class Dice:
     @staticmethod
     def d4(n: int):
         return [randint(1, 4) for _ in range(n)]
+
+    @staticmethod
+    def d1(n: int):
+        return [1 for _ in range(n)]

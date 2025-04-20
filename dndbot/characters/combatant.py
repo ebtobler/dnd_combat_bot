@@ -15,7 +15,7 @@ class CombatantState:
     hp: int
     spell_slots: dict[int: int]
 
-    def __init__(self, name, hp, spell_slots):
+    def __init__(self, name: str, hp: int, spell_slots: dict[int: int]):
         self.name = name
         self.hp = hp
         self.spell_slots = spell_slots

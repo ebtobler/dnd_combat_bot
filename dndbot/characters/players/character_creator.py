@@ -2,6 +2,7 @@ from dndbot.characters.players.player_character import PlayerCharacter
 from os import path
 from json import dump
 
+
 class CharacterCreator:
 
     @staticmethod
@@ -24,9 +25,9 @@ class CharacterCreator:
         prof_bonus = tuple(['Proficiency Bonus'])
         spell_dc = tuple(['Spell DC'])
         ability_scores = tuple(['Strength, mod', 'Dexterity, mod', 'Constitution, mod',
-                      'Intelligence, mod', 'Wisdom, mod', 'Charisma, mod'])
+                                'Intelligence, mod', 'Wisdom, mod', 'Charisma, mod'])
         saves = tuple(['Str save', 'Dex save', 'Con save', 'Int save', 'Wis save', 'Cha save'])
-        actions = tuple(['Actions'])
+        actions = tuple(['Weapon Attacks', 'Spell Attacks'])
         bonus_actions = tuple(['Bonus Actions'])
         spell_slots = tuple(['lvl 1 spell slots', 'lvl 2 spell slots', 'lvl 3 spell slots'])
         spells = tuple(['Cantrips', 'lvl 1 spells', 'lvl 2 spells', 'lvl 3 spells'])
@@ -66,6 +67,7 @@ class CharacterCreator:
 
     @staticmethod
     def dump_character_to_json(character: PlayerCharacter):
-        character_file = path.join(path.dirname(__file__), '..', '..', '..', 'stats', 'players', f'{character["name"]}.json')
+        character_file = path.join(path.dirname(__file__), '..', '..', '..', 'stats', 'players',
+                                   f'{character["name"]}.json')
         with open(character_file, 'w') as f:
             dump(character.stats, f, indent=2)
