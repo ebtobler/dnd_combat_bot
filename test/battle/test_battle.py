@@ -4,12 +4,12 @@ from unittest.mock import patch
 from dndbot.battle.battle import Battle
 from dndbot.characters.enemies.enemy_character import EnemyCharacter
 from dndbot.characters.players.player_character import PlayerCharacter
-from dndbot.dice.dice import Dice
+from dndbot.dice.dice import Dice, D20
 
 
 class TestBattle(TestCase):
 
-    @patch.object(Dice, 'd20')
+    @patch.object(D20, 'roll')
     def test_initiative_ordered_correctly(self, mock_d20):
         mock_d20.side_effect = [[1], [2], [3], [4]]
         players = [
@@ -24,7 +24,7 @@ class TestBattle(TestCase):
         expected_order = [enemies[1], enemies[0], players[1], players[0]]
         self.assertEqual(b.turn_order, expected_order)
 
-    @patch.object(Dice, 'd20', return_value=[10])
+    @patch.object(D20, 'roll', return_value=[10])
     def test_initiative_bonuses_taken_into_account(self, mock_d20):
         players = [
             PlayerCharacter({'name': 'player1', 'Initiative': 4}),

@@ -1,7 +1,7 @@
 from re import search
 
 from dndbot.battle.expectimax.actions.damage_data import DamageData
-from dndbot.dice.dice import Dice
+from dndbot.dice.dice import D100, D20, D12, D10, D8, D6, D4, D1
 
 
 class StringParser:
@@ -18,23 +18,23 @@ class StringParser:
         n = int(n_str)
 
         if die == 'd100':
-            roll_function = Dice.d100
+            dice_to_roll = D100
         elif die == 'd20':
-            roll_function = Dice.d20
+            dice_to_roll = D20
         elif die == 'd12':
-            roll_function = Dice.d12
+            dice_to_roll = D12
         elif die == 'd10':
-            roll_function = Dice.d10
+            dice_to_roll = D10
         elif die == 'd8':
-            roll_function = Dice.d8
+            dice_to_roll = D8
         elif die == 'd6':
-            roll_function = Dice.d6
+            dice_to_roll = D6
         elif die == 'd4':
-            roll_function = Dice.d4
+            dice_to_roll = D4
         else:
-            roll_function = Dice.d1
+            dice_to_roll = D1
 
-        return n, roll_function
+        return n, dice_to_roll
 
     """
     format is:
@@ -59,6 +59,6 @@ class StringParser:
     @staticmethod
     def parse_damage_string(dmg: str):
         components = dmg.split(' ')
-        damage_dice = StringParser.str_to_dice_function(components[0])
+        damage_dice = tuple(StringParser.str_to_dice_function(components[0]))
         modifier = int(components[2]) if components[1] == '+' else -1 * int(components[2])
         return DamageData(damage_dice, modifier, components[3])
