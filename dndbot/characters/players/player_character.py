@@ -1,7 +1,7 @@
 from abc import ABC
 
 from dndbot.characters.combatant import Combatant
-from dndbot.dice.dice import Dice, D20
+from dndbot.dice.dice import D20
 
 
 class PlayerCharacter(Combatant, ABC):

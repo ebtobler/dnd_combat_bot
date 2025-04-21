@@ -12,4 +12,3 @@ class Battle:
         initiatives = [(combatant.roll_initiative(), combatant) for combatant in self.combatants]
         initiatives.sort(reverse=True)
         self.turn_order = [combatant[1] for combatant in initiatives]
-

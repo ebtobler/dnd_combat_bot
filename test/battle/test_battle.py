@@ -4,7 +4,7 @@ from unittest.mock import patch
 from dndbot.battle.battle import Battle
 from dndbot.characters.enemies.enemy_character import EnemyCharacter
 from dndbot.characters.players.player_character import PlayerCharacter
-from dndbot.dice.dice import Dice, D20
+from dndbot.dice.dice import D20
 
 
 class TestBattle(TestCase):

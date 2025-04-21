@@ -1,6 +1,11 @@
 from dndbot.battle.battle import Battle
-from dndbot.battle.expectimax.combat_state import CombatState
-from dndbot.characters.combatant import CombatantState
+from dndbot.characters.combatant import CombatantState, Combatant
+
+
+class CombatState:
+
+    def __init__(self, combatant_states: dict[Combatant: CombatantState]):
+        self.combatant_states = combatant_states
 
 
 class Expectimax:
