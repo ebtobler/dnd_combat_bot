@@ -1,4 +1,4 @@
-from abc import ABC, abstractmethod
+from abc import abstractmethod
 from random import randint
 from typing import Protocol
 
@@ -14,7 +14,7 @@ class Dice(Protocol):
         pass
 
 
-class D100(Dice, ABC):
+class D100(Dice):
 
     max = 100
     average_roll = 50.5
@@ -24,7 +24,7 @@ class D100(Dice, ABC):
         return [randint(1, 100) for _ in range(n)]
 
 
-class D20(Dice, ABC):
+class D20(Dice):
 
     max = 20
     average_roll = 10.5
@@ -34,7 +34,7 @@ class D20(Dice, ABC):
         return [randint(1, 20) for _ in range(n)]
 
 
-class D12(Dice, ABC):
+class D12(Dice):
 
     max = 12
     average_roll = 6.5
@@ -44,7 +44,7 @@ class D12(Dice, ABC):
         return [randint(1, 12) for _ in range(n)]
 
 
-class D10(Dice, ABC):
+class D10(Dice):
 
     max = 10
     average_roll = 5.5
@@ -54,7 +54,7 @@ class D10(Dice, ABC):
         return [randint(1, 10) for _ in range(n)]
 
 
-class D8(Dice, ABC):
+class D8(Dice):
 
     max = 8
     average_roll = 4.5
@@ -64,7 +64,7 @@ class D8(Dice, ABC):
         return [randint(1, 8) for _ in range(n)]
 
 
-class D6(Dice, ABC):
+class D6(Dice):
 
     max = 6
     average_roll = 3.5
@@ -74,7 +74,7 @@ class D6(Dice, ABC):
         return [randint(1, 6) for _ in range(n)]
 
 
-class D4(Dice, ABC):
+class D4(Dice):
 
     max = 4
     average_roll = 2.5
@@ -84,7 +84,7 @@ class D4(Dice, ABC):
         return [randint(1, 4) for _ in range(n)]
 
 
-class D1(Dice, ABC):
+class D1(Dice):
 
     max = 1
     average_roll = 1
