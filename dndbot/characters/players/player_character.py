@@ -5,6 +5,7 @@ from dndbot.dice.dice import D20
 class PlayerCharacter(Combatant):
 
     def __init__(self, stats: dict):
+        self.team = 'player'
         self.name = stats.get('name')
         self.hp_max = stats.get('HP_Max')
         self.ac = stats.get('AC')
