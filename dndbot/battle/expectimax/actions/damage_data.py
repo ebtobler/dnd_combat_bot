@@ -12,3 +12,9 @@ class DamageData:
         self.dice = dice
         self.mod = mod
         self.dmg_type = dmg_type
+
+    def roll_damage(self):
+        return sum(self.dice[1](self.dice[0]) + self.dice[2])  # dx(n) + mod
+
+    def avg_damage(self):
+        pass

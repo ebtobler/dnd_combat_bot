@@ -7,7 +7,8 @@ class Expectimax:
 
     def __init__(self, battle: Battle):
         self.battle = battle
-        self.root = CombatState([CombatantState(c['name'], c['HP'], c['Spell_Slots']) for c in battle.combatants])
+        initial_states = [CombatantState(c['name'], c['HP'], c['Spell_Slots']) for c in battle.combatants]
+        self.root = CombatState(initial_states)
 
     def generate_subtree(self, depth: int):
         pass
