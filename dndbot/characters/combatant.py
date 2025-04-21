@@ -1,9 +1,20 @@
-from abc import ABC, abstractmethod
-from collections.abc import MutableMapping
+from abc import abstractmethod
 from dataclasses import dataclass
+from typing import Protocol
 
 
-class Combatant(ABC, MutableMapping):
+class Combatant(Protocol):
+
+    name: str
+    hp_max: int
+    ac: int
+    initiative: int
+    speed: int
+    ability_scores: dict[str, int]
+    saving_throws: dict[str, int]
+    actions: dict[str, dict[str, list]]
+    spells: dict[str, str]
+
     @abstractmethod
     def roll_initiative(self):
         pass

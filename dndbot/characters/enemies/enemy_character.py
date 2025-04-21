@@ -1,32 +1,22 @@
-from abc import ABC
-
 from dndbot.characters.combatant import Combatant
 from dndbot.dice.dice import D20
 
 
-class EnemyCharacter(Combatant, ABC):
+class EnemyCharacter(Combatant):
 
     def __init__(self, stats: dict):
-        self.stats = stats
-
-    def __setitem__(self, k, v):
-        self.stats[k] = v
-
-    def __delitem__(self, v):
-        del self.stats[v]
-
-    def __getitem__(self, k):
-        return self.stats[k]
-
-    def __len__(self) -> int:
-        return len(self.stats)
-
-    def __iter__(self):
-        return iter(self.stats)
+        self.name = stats['name']
+        self.hp_max = stats['HP_Max']
+        self.ac = stats['AC']
+        self.initiative = stats['Initiative']
+        self.speed = stats['Speed']
+        self.ability_scores = stats['Ability_Scores']
+        self.saving_throws = stats['Saving_Throws']
+        self.actions = stats['Actions']
+        self.spells = stats['Spells']
 
     def __repr__(self):
-        return self.stats['name']
+        return self.name
 
     def roll_initiative(self):
-        return next(iter(D20.roll(1))) + self.stats['Initiative']
-
+        return next(iter(D20.roll(1))) + self.initiative

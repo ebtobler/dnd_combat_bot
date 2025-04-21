@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-from math import floor
 
 from dndbot.dice.dice import Dice
 

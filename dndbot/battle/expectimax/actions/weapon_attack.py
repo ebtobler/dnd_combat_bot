@@ -12,8 +12,14 @@ class WeaponAttack(Action, ABC):
         self.hit = hit
         self.damage = damage
 
+    def __eq__(self, other):
+        return isinstance(other, WeaponAttack) \
+               and self.weapon_type == other.weapon_type \
+               and self.hit == other.hit \
+               and self.damage == other.damage
+
     def perform(self, target: Combatant):
         pass
 
     def average_outcome(self, target: Combatant):
-        return sum([d.avg_damage() for d in self.damage])
+        return sum([d.average_damage() for d in self.damage])

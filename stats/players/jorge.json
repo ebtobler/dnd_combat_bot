@@ -24,10 +24,14 @@
   },
 
   "Actions": 
-  [
-    "Melee Weapon Attack: Handaxe. +3 to hit, reach 5 ft., one target. Hit: 1d6 + 3 slashing", 
-    "Melee Weapon Attack: Shield Bash. +5 to hit, reach 5 ft. one target. Hit: 1d4 + 3 bludgeoning"
-  ],
+  {
+    "Weapon_Attacks": 
+    [
+        "Melee Weapon Attack: +3 to hit, reach 5 ft. one target. Hit: 1d6 + 3 slashing",
+        "Melee Weapon Attack: +5 to hit, reach 5 ft. one target. Hit: 1d4 + 3 bludgeoning",
+        "Ranged Weapon Attack: +3 to hit, reach 20 ft. one target. Hit: 1d6 + 1 piercing"
+    ]
+  },
   "Bonus_Actions": 
   [
     "Rage."

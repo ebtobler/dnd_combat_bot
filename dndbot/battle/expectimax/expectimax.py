@@ -7,6 +7,9 @@ class CombatState:
     def __init__(self, combatant_states: dict[Combatant: CombatantState]):
         self.combatant_states = combatant_states
 
+    def generate_children(self, current_turn: Combatant):
+        pass
+
 
 class Expectimax:
 
