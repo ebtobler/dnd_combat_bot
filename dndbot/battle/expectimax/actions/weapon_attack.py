@@ -16,4 +16,4 @@ class WeaponAttack(Action, ABC):
         pass
 
     def average_outcome(self, target: Combatant):
-        pass
+        return sum([d.avg_damage() for d in self.damage])

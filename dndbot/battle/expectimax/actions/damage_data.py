@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from math import floor
 
 from dndbot.dice.dice import Dice
 
@@ -15,7 +16,7 @@ class DamageData:
         self.dmg_type = dmg_type
 
     def roll_damage(self):
-        pass  # dx(n) + mod
+        return sum(self.dice[1].roll(self.dice[0])) + self.mod
 
-    def avg_damage(self):
-        pass
+    def average_damage(self):
+        return self.dice[0] * self.dice[1].average_roll + self.mod
