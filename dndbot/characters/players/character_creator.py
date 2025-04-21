@@ -67,7 +67,18 @@ class CharacterCreator:
 
     @staticmethod
     def dump_character_to_json(character: PlayerCharacter):
+        stats = {
+            'name': character.name,
+            'HP_Max': character.hp_max,
+            'AC': character.ac,
+            'Initiative': character.initiative,
+            'Speed': character.speed,
+            'Ability_Scores': character.ability_scores,
+            'Saving_Throws': character.saving_throws,
+            'Actions': character.actions,
+            'Spells': character.spells,
+        }
         character_file = path.join(path.dirname(__file__), '..', '..', '..', 'stats', 'players',
-                                   f'{character["name"]}.json')
+                                   f'{character.name}.json')
         with open(character_file, 'w') as f:
-            dump(character.stats, f, indent=2)
+            dump(stats, f, indent=2)

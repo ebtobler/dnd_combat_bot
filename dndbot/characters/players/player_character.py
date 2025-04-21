@@ -5,15 +5,15 @@ from dndbot.dice.dice import D20
 class PlayerCharacter(Combatant):
 
     def __init__(self, stats: dict):
-        self.name = stats['name']
-        self.hp_max = stats['HP_Max']
-        self.ac = stats['AC']
-        self.initiative = stats['Initiative']
-        self.speed = stats['Speed']
-        self.ability_scores = stats['Ability_Scores']
-        self.saving_throws = stats['Saving_Throws']
-        self.actions = stats['Actions']
-        self.spells = stats['Spells']
+        self.name = stats.get('name')
+        self.hp_max = stats.get('HP_Max')
+        self.ac = stats.get('AC')
+        self.initiative = stats.get('Initiative')
+        self.speed = stats.get('Speed')
+        self.ability_scores = stats.get('Ability_Scores')
+        self.saving_throws = stats.get('Saving_Throws')
+        self.actions = stats.get('Actions')
+        self.spells = stats.get('Spells')
 
     def __repr__(self):
         return self.name
