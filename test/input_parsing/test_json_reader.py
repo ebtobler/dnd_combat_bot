@@ -1,8 +1,8 @@
 from os import path
 from unittest import TestCase
 
-from dndbot.battle.expectimax.actions.damage_data import DamageData
-from dndbot.battle.expectimax.actions.weapon_attack import WeaponAttack
+from dndbot.expectimax.actions.damage_data import DamageData
+from dndbot.expectimax.actions.weapon_attack import WeaponAttack
 from dndbot.dice.dice import D6, D4
 from dndbot.input_parsing.json_reader import JsonReader
 

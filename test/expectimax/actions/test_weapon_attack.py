@@ -1,9 +1,9 @@
 from copy import deepcopy
 from unittest import TestCase
 
-from dndbot.battle.expectimax.actions.damage_data import DamageData
-from dndbot.battle.expectimax.actions.weapon_attack import WeaponAttack
-from dndbot.battle.expectimax.expectimax import CombatState
+from dndbot.expectimax.actions.damage_data import DamageData
+from dndbot.expectimax.actions.weapon_attack import WeaponAttack
+from dndbot.expectimax.combat_state import CombatState
 from dndbot.characters.combatant import CombatantState
 from dndbot.characters.enemies.enemy_character import EnemyCharacter
 from dndbot.dice.dice import D6, D4

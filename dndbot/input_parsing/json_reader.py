@@ -1,6 +1,6 @@
 from json import loads
 
-from dndbot.battle.expectimax.actions.weapon_attack import WeaponAttack
+from dndbot.expectimax.actions.weapon_attack import WeaponAttack
 from dndbot.characters.enemies.enemy_character import EnemyCharacter
 from dndbot.characters.players.player_character import PlayerCharacter
 from dndbot.input_parsing.string_parser import StringParser

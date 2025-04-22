@@ -1,12 +1,14 @@
 from unittest import TestCase
+from unittest.mock import patch
 
-from dndbot.battle.expectimax.actions.damage_data import DamageData
-from dndbot.battle.expectimax.actions.weapon_attack import WeaponAttack
-from dndbot.battle.expectimax.expectimax import CombatState
+from dndbot.expectimax.actions.damage_data import DamageData
+from dndbot.expectimax.actions.weapon_attack import WeaponAttack
+from dndbot.expectimax.combat_state import CombatState
+from dndbot.expectimax.expectimax import Expectimax
 from dndbot.characters.combatant import CombatantState
 from dndbot.characters.enemies.enemy_character import EnemyCharacter
 from dndbot.characters.players.player_character import PlayerCharacter
-from dndbot.dice.dice import D6, D12, D8, D4
+from dndbot.dice.dice import D6, D12, D8, D20
 
 
 class TestCombatState(TestCase):
@@ -28,7 +30,7 @@ class TestCombatState(TestCase):
         combatant_states = {c: CombatantState(c.name, c.hp_max, c.spell_slot_max) for c in combatants}
         state = CombatState(combatant_states)
 
-        state.generate_children(combatants[0])
+        state.expand_children(combatants[0])
         expected = [player_attack.generate_states(CombatState(combatant_states), combatants[1])]
         self.assertEqual(expected, state.children)
 
@@ -41,7 +43,7 @@ class TestCombatState(TestCase):
         combatant_states = {c: CombatantState(c.name, c.hp_max, c.spell_slot_max) for c in combatants}
         state = CombatState(combatant_states)
 
-        state.generate_children(combatants[0])
+        state.expand_children(combatants[0])
         expected = [player_attack.generate_states(CombatState(combatant_states), combatants[1]),
                     player_attack.generate_states(CombatState(combatant_states), combatants[2])]
         self.assertEqual(expected, state.children)
@@ -64,7 +66,7 @@ class TestCombatState(TestCase):
         combatant_states = {c: CombatantState(c.name, c.hp_max, c.spell_slot_max) for c in combatants}
         state = CombatState(combatant_states)
 
-        state.generate_children(combatants[0])
+        state.expand_children(combatants[0])
         expected = [player_attack_1.generate_states(CombatState(combatant_states), combatants[1]),
                     player_attack_1.generate_states(CombatState(combatant_states), combatants[2]),
                     player_attack_2.generate_states(CombatState(combatant_states), combatants[1]),
@@ -90,7 +92,7 @@ class TestCombatState(TestCase):
         combatant_states = {c: CombatantState(c.name, c.hp_max, c.spell_slot_max) for c in combatants}
         state = CombatState(combatant_states)
 
-        state.generate_children(combatants[0])
+        state.expand_children(combatants[0])
         best_action = state.choose_maximum_utility_child()
         expected = (player_attack_1, combatants[2])
         self.assertEqual(expected, best_action)
@@ -113,11 +115,41 @@ class TestCombatState(TestCase):
         combatant_states = {c: CombatantState(c.name, c.hp_max, c.spell_slot_max) for c in combatants}
         state = CombatState(combatant_states)
 
-        state.generate_children(combatants[0])
+        state.expand_children(combatants[0])
         best_action = state.choose_maximum_utility_child()
         expected = (player_attack_2, combatants[2])
         self.assertEqual(expected, best_action)
 
 
 class TestExpectimax(TestCase):
-    pass
+
+    @patch.object(D20, 'roll')
+    def test_initiative_ordered_correctly(self, mock_d20):
+        mock_d20.side_effect = [[1], [2], [3], [4]]
+        players = [
+            PlayerCharacter({'name': 'player1', 'Initiative': 0}),
+            PlayerCharacter({'name': 'player2', 'Initiative': 0}),
+        ]
+        enemies = [
+            EnemyCharacter({'name': 'enemy1', 'Initiative': 0}),
+            EnemyCharacter({'name': 'enemy2', 'Initiative': 0}),
+        ]
+        b = Expectimax(players, enemies)
+        expected_order = [enemies[1], enemies[0], players[1], players[0]]
+        self.assertEqual(b.turn_order, expected_order)
+
+    @patch.object(D20, 'roll', return_value=[10])
+    def test_initiative_bonuses_taken_into_account(self, mock_d20):
+        players = [
+            PlayerCharacter({'name': 'player1', 'Initiative': 4}),
+            PlayerCharacter({'name': 'player2', 'Initiative': 3}),
+        ]
+        enemies = [
+            EnemyCharacter({'name': 'enemy1', 'Initiative': 2}),
+            EnemyCharacter({'name': 'enemy2', 'Initiative': 1}),
+        ]
+        b = Expectimax(players, enemies)
+        expected_order = [players[0], players[1], enemies[0], enemies[1]]
+        self.assertEqual(b.turn_order, expected_order)
+
+

@@ -1,6 +1,6 @@
 from re import search
 
-from dndbot.battle.expectimax.actions.damage_data import DamageData
+from dndbot.expectimax.actions.damage_data import DamageData
 from dndbot.dice.dice import D100, D20, D12, D10, D8, D6, D4, D1
 
 

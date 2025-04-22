@@ -1,9 +1,9 @@
 from abc import ABC
 from copy import deepcopy
 
-from dndbot.battle.expectimax.action import Action
-from dndbot.battle.expectimax.actions.damage_data import DamageData
-from dndbot.battle.expectimax.expectimax import CombatState
+from dndbot.expectimax.action import Action
+from dndbot.expectimax.actions.damage_data import DamageData
+from dndbot.expectimax.combat_state import CombatState
 from dndbot.characters.combatant import Combatant
 
 

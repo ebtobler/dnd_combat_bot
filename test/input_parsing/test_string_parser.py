@@ -1,7 +1,7 @@
 from unittest import TestCase
 
-from dndbot.battle.expectimax.actions.damage_data import DamageData
-from dndbot.dice.dice import Dice, D12, D6, D4
+from dndbot.expectimax.actions.damage_data import DamageData
+from dndbot.dice.dice import D12, D6, D4
 from dndbot.input_parsing.string_parser import StringParser
 
 

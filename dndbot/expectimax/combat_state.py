@@ -1,16 +1,15 @@
 from dataclasses import dataclass
 
-from dndbot.battle.battle import Battle
-from dndbot.battle.expectimax.action import Action
+from dndbot.expectimax.action import Action
 from dndbot.characters.combatant import CombatantState, Combatant
 
 
 @dataclass
 class CombatState:
 
-    combatant_states: dict[Combatant: CombatantState]
     # children member is list of tuples of (action, target, outcome_states)
     # outcome_states is list of tuples of (probability, state)
+    combatant_states: dict[Combatant: CombatantState]
     children: list[tuple[Action, Combatant, list[tuple[float, "CombatState"]]]] or None
     player_w = 5
     enemy_w = 3
@@ -80,10 +79,9 @@ class CombatState:
                 minimum_utility_action = (action[0], action[1])
         return minimum_utility_action
 
-    def generate_children(self, current_turn: Combatant):
+    def expand_children(self, current_turn: Combatant):
         if self.children is not None:
             return
-
         children = []
         actions = current_turn.actions
         for action_type in actions.values():
@@ -93,17 +91,3 @@ class CombatState:
                 for t in targets:
                     children.append(action.generate_states(self, t))
         self.children = children
-
-
-class Expectimax:
-
-    def __init__(self, battle: Battle):
-        self.battle = battle
-        initial_states = [CombatantState(c.name, c.hp_max, c.spell_slot_max) for c in battle.combatants]
-        self.root = CombatState(initial_states)
-
-    def generate_subtree(self, depth: int):
-        pass
-
-    def play(self):
-        pass
