@@ -1,5 +1,5 @@
 from dndbot.expectimax.combat_state import CombatState
-from dndbot.characters.combatant import CombatantState
+from dndbot.characters.combatant import CombatantState, Combatant
 from dndbot.characters.enemies.enemy_character import EnemyCharacter
 from dndbot.characters.players.player_character import PlayerCharacter
 
@@ -14,11 +14,16 @@ class Expectimax:
         initial_states = [CombatantState(c.name, c.hp_max, c.spell_slot_max) for c in self.combatants]
         self.root = CombatState(initial_states)
 
-    def expand_subtree(self, node: CombatState, depth: int):
+    def expand_subtree(self, node: CombatState, turn: Combatant, depth: int):
         current_layer = [node]
         next_layer = []
-        for state in current_layer:
-            state.expand_children()
+        next_turn_index = self.turn_order.index(turn) + 1
+        for c in range(next_turn_index, next_turn_index + depth):
+            for state in current_layer:
+                state.expand_children(self.turn_order[c])
+                next_layer.extend(state.children)
+            current_layer = next_layer
+            next_layer.clear()
 
     def play(self):
         pass

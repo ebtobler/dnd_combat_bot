@@ -9,6 +9,7 @@ from dndbot.characters.combatant import CombatantState
 from dndbot.characters.enemies.enemy_character import EnemyCharacter
 from dndbot.characters.players.player_character import PlayerCharacter
 from dndbot.dice.dice import D6, D12, D8, D20
+from test._dnd_utils.dnd_utils import DndUtils
 
 
 class TestCombatState(TestCase):
@@ -152,4 +153,7 @@ class TestExpectimax(TestCase):
         expected_order = [players[0], players[1], enemies[0], enemies[1]]
         self.assertEqual(b.turn_order, expected_order)
 
+    def test_expand_subtree(self):
+        player, enemy = DndUtils.single_player_and_enemy()
+        exp = Expectimax(player, enemy)
 
