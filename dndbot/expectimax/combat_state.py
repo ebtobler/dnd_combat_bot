@@ -11,12 +11,14 @@ class CombatState:
     # outcome_states is list of tuples of (probability, state)
     combatant_states: dict[Combatant: CombatantState]
     children: list[tuple[Action, Combatant, list[tuple[float, "CombatState"]]]] or None
+    outcome: int
     player_w = 5
     enemy_w = 3
 
     def __init__(self, combatant_states: dict[Combatant: CombatantState]):
-        self.combatant_states = combatant_states
         self.children = None
+        self.outcome = 0
+        self.combatant_states = combatant_states
 
     """
     There are a few different utility functions I've come up with:
@@ -81,7 +83,25 @@ class CombatState:
 
     def expand_children(self, current_turn: Combatant):
         if self.children is not None:
-            return
+            self.outcome = 0
+            return 0
+
+        players_alive = set(filter(lambda x: x > 0,
+                                   [c[1].hp if c[0].team == 'player' else 0
+                                    for c in self.combatant_states.items()]))
+        players_alive.discard(0)
+        enemies_alive = set(filter(lambda x: x > 0,
+                                   [c[1].hp if c[0].team == 'enemy' else 0
+                                    for c in self.combatant_states.items()]))
+        enemies_alive.discard(0)
+
+        if len(players_alive) == 0:
+            self.outcome = 1
+            return 1
+        elif len(enemies_alive) == 0:
+            self.outcome = -1
+            return -1
+
         children = []
         actions = current_turn.actions
         for action_type in actions.values():
@@ -89,5 +109,18 @@ class CombatState:
                 targets = list(filter(lambda x: x.team != current_turn.team,
                                       [c for c in self.combatant_states.keys()]))
                 for t in targets:
-                    children.append(action.generate_states(self, t))
+                    if self.combatant_states[t].hp > 0:
+                        children.append(action.generate_states(self, t))
         self.children = children
+        return 0
+
+    def get_child_states(self):
+        child_states = []
+        if self.children is not None:
+            for action in self.children:
+                action_states = [probability_state_pair[1] for probability_state_pair in action[2]]
+                child_states.extend(action_states)
+        return child_states
+
+    def is_terminal(self):
+        return self.outcome != 0

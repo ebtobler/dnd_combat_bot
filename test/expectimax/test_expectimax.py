@@ -1,3 +1,4 @@
+from copy import deepcopy
 from unittest import TestCase
 from unittest.mock import patch
 
@@ -121,6 +122,18 @@ class TestCombatState(TestCase):
         expected = (player_attack_2, combatants[2])
         self.assertEqual(expected, best_action)
 
+    def test_get_child_states(self):
+        players, enemies = DndUtils.single_player_and_enemy()
+        combatant_states = {c: CombatantState(c.name, c.hp_max, c.spell_slot_max) for c in players + enemies}
+        state = CombatState(combatant_states)
+        state.expand_children(players[0])
+
+        expected = [deepcopy(state), deepcopy(state)]
+        expected[0].combatant_states[enemies[0]].hp = 2.5
+        for s in expected:
+            s.children = None
+        result = state.get_child_states()
+        self.assertEqual(expected, result)
 
 class TestExpectimax(TestCase):
 
@@ -156,4 +169,7 @@ class TestExpectimax(TestCase):
     def test_expand_subtree(self):
         player, enemy = DndUtils.single_player_and_enemy()
         exp = Expectimax(player, enemy)
+        num_expanded, num_generated = exp.expand_subtree(exp.root, player[0], 4)
+        DndUtils.print_state_tree(exp.root)
+        print(num_expanded, num_generated)
 

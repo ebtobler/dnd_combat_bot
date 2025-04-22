@@ -3,6 +3,7 @@ from dndbot.characters.players.player_character import PlayerCharacter
 from dndbot.dice.dice import D6, D12
 from dndbot.expectimax.actions.damage_data import DamageData
 from dndbot.expectimax.actions.weapon_attack import WeaponAttack
+from dndbot.expectimax.combat_state import CombatState
 
 
 class DndUtils:
@@ -16,7 +17,14 @@ class DndUtils:
         player = [PlayerCharacter({'name': 'p1', 'HP_Max': 20, 'AC': 16,
                                    'Actions': {'Weapon_Attacks': [player_attack]},
                                    'Initiative': 20, })]
-        enemy = [EnemyCharacter({'name': 'e1', 'HP_Max': 15, 'AC': 12,
+        enemy = [EnemyCharacter({'name': 'e1', 'HP_Max': 10, 'AC': 12,
                                  'Actions': {'Weapon_Attacks': [enemy_attack]},
                                  'Initiative': 0})]
         return player, enemy
+
+    @staticmethod
+    def print_state_tree(root: CombatState, indent=''):
+        print(indent, end='')
+        print(root.combatant_states)
+        for c in root.get_child_states():
+            DndUtils.print_state_tree(c, indent + '    ')

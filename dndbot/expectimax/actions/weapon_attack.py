@@ -27,7 +27,7 @@ class WeaponAttack(Action, ABC):
         chance_of_success = self.hit_chance(target)
         success_state = deepcopy(current_state)
         success_state.combatant_states[target].hp -= self.average_damage()
-        if success_state.combatant_states[target].hp < 0:
+        if success_state.combatant_states[target].hp <= 0:
             success_state.combatant_states[target].hp = 0
         hit_outcome = (chance_of_success, success_state)
         miss_outcome = (1 - chance_of_success, deepcopy(current_state))
