@@ -12,10 +12,10 @@ from dndbot.dice.dice import D6, D4
 class TestWeaponAttack(TestCase):
 
     def test_hit_chance(self):
-        attack = WeaponAttack('untyped', 4, [])
+        attack = WeaponAttack('untyped', 5, [])
         target = EnemyCharacter({'AC': 14})
         result = attack.hit_chance(target)
-        self.assertEqual(.5, result)
+        self.assertEqual(.6, result)
 
     def test_average_damage(self):
         damage = [DamageData((1, D6), 1, 'untyped'), DamageData((2, D4), 1, 'force')]
@@ -29,7 +29,7 @@ class TestWeaponAttack(TestCase):
         attack = WeaponAttack('untyped', 4, damage)
         target = EnemyCharacter({'AC': 14})
         result = attack.average_outcome(target)
-        expected = .5 * (3.5 + 1 + 2.5 * 2 + 1)
+        expected = attack.hit_chance(target) * (3.5 + 1 + 2.5 * 2 + 1)
         self.assertEqual(expected, result)
 
     def test_generate_states(self):
@@ -45,6 +45,6 @@ class TestWeaponAttack(TestCase):
         miss_chance = 1 - hit_chance
         miss_state = deepcopy(current_state)
 
-        expected = (WeaponAttack('Melee', 4, damage), [(hit_chance, hit_state), (miss_chance, miss_state)])
+        expected = (WeaponAttack('Melee', 4, damage), target, [(hit_chance, hit_state), (miss_chance, miss_state)])
         result = attack.generate_states(current_state, target)
         self.assertEqual(expected, result)

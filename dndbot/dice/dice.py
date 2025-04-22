@@ -13,6 +13,14 @@ class Dice(Protocol):
     def roll(n: int):
         pass
 
+    @classmethod
+    def __repr__(cls):
+        return cls.__name__
+
+    @classmethod
+    def __str__(cls):
+        return cls.__repr__()
+
 
 class D100(Dice):
 

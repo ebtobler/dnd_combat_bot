@@ -5,6 +5,7 @@ from typing import Protocol
 
 class Combatant(Protocol):
 
+    team: str
     name: str
     hp_max: int
     ac: int
@@ -12,7 +13,7 @@ class Combatant(Protocol):
     speed: int
     ability_scores: dict[str, int]
     saving_throws: dict[str, int]
-    actions: dict[str, dict[str, list]]
+    actions: dict[str, list['Action']]
     spells: dict[str, str]
     spell_slot_max: dict[str, int]
 

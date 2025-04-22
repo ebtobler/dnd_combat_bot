@@ -14,6 +14,12 @@ class DamageData:
         self.mod = mod
         self.dmg_type = dmg_type
 
+    def __repr__(self):
+        return f'{self.dice[0]}{str(self.dice[1].__repr__())} + {self.mod} {self.dmg_type}'
+
+    def __str__(self):
+        return self.__repr__()
+
     def roll_damage(self):
         return sum(self.dice[1].roll(self.dice[0])) + self.mod
 
