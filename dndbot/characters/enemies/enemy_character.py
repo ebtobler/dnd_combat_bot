@@ -23,5 +23,11 @@ class EnemyCharacter(Combatant):
     def __str__(self):
         return self.name
 
+    def __eq__(self, other):
+        return isinstance(other, EnemyCharacter) and self.name == other.name
+
+    def __hash__(self):
+        return hash(self.name)
+
     def roll_initiative(self):
         return next(iter(D20.roll(1))) + self.initiative

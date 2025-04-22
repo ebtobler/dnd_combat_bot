@@ -1,14 +1,18 @@
+from dataclasses import dataclass
+
 from dndbot.battle.battle import Battle
 from dndbot.battle.expectimax.action import Action
 from dndbot.characters.combatant import CombatantState, Combatant
 
 
+@dataclass
 class CombatState:
 
-    children: list[tuple[Action, list[tuple[float, "CombatState"]]]]
+    children: list[tuple[Action, list[tuple[float, "CombatState"]]]] or None
 
     def __init__(self, combatant_states: dict[Combatant: CombatantState]):
         self.combatant_states = combatant_states
+        self.children = None
 
     """
     There are a few different utility functions I've come up with:
@@ -35,10 +39,13 @@ class CombatState:
         return highest_utility_action
 
     def generate_children(self, current_turn: Combatant):
+        if self.children is not None:
+            return
+
         children = []
         actions = current_turn.actions
         for action_type in actions:
-            for a in action_type:
+            for action in action_type:
                 children.append()
 
 

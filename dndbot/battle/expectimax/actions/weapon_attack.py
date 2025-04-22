@@ -1,8 +1,10 @@
 from abc import ABC
+from copy import deepcopy
 
 from dndbot.battle.expectimax.action import Action
 from dndbot.battle.expectimax.actions.damage_data import DamageData
-from dndbot.characters.combatant import CombatantState, Combatant
+from dndbot.battle.expectimax.expectimax import CombatState
+from dndbot.characters.combatant import Combatant
 
 
 class WeaponAttack(Action, ABC):
@@ -18,8 +20,13 @@ class WeaponAttack(Action, ABC):
                and self.hit == other.hit \
                and self.damage == other.damage
 
-    def perform(self, target: CombatantState):
-        pass
+    def generate_states(self, current_state: CombatState, target: Combatant):
+        chance_of_success = self.hit_chance(target)
+        success_state = deepcopy(current_state)
+        success_state.combatant_states[target].hp -= self.average_damage()
+        hit_outcome = (chance_of_success, success_state)
+        miss_outcome = (1 - chance_of_success, deepcopy(current_state))
+        return self, [hit_outcome, miss_outcome]
 
     def average_outcome(self, target: Combatant):
         return self.hit_chance(target) * self.average_damage()
