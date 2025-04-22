@@ -14,6 +14,7 @@ class Combatant(Protocol):
     saving_throws: dict[str, int]
     actions: dict[str, dict[str, list]]
     spells: dict[str, str]
+    spell_slot_max: dict[str, int]
 
     @abstractmethod
     def roll_initiative(self):

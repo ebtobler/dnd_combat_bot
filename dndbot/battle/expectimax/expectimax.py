@@ -10,8 +10,19 @@ class CombatState:
     def __init__(self, combatant_states: dict[Combatant: CombatantState]):
         self.combatant_states = combatant_states
 
-    def utility(self, probability: float):
-        return probability * sum([c[1].hp if c[0].team == 'player' else -1 * c[1].hp for c in list(self.combatant_states)])
+    """
+    There are a few different utility functions I've come up with:
+    u1 = total_player_health - total_enemy_health
+    u2 = total_player_health + w * players_alive - total_enemy_health - w * enemies_alive
+    u3 = damage_dealt_by_players - damage_dealt_by_enemies
+    u4 = damage_dealt_by_players + w * players_alive - damage_dealt_by_enemies - w * enemies_alive
+    damage and health might be equivalent
+    """
+    def utility(self, probability: float = None):
+        u = sum([c[1].hp if c[0].team == 'player' else -1 * c[1].hp for c in self.combatant_states.items()])
+        if probability is None:
+            return u
+        return probability * u
 
     def choose_highest_utility_child(self):
         highest_utility_action = None
@@ -24,7 +35,11 @@ class CombatState:
         return highest_utility_action
 
     def generate_children(self, current_turn: Combatant):
-        pass
+        children = []
+        actions = current_turn.actions
+        for action_type in actions:
+            for a in action_type:
+                children.append()
 
 
 class Expectimax:
