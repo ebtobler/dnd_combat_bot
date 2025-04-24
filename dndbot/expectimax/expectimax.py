@@ -16,6 +16,7 @@ class Expectimax:
         initial_states = {c: CombatantState(c.name, c.hp_max, c.spell_slot_max) for c in self.combatants}
         self.root = CombatState(initial_states)
         self.current_state = self.root
+        self.combat_log = []
 
     def expand_subtree(self, node: CombatState, turn: Combatant, depth: int):
         num_expanded = 0
@@ -43,11 +44,38 @@ class Expectimax:
         return num_expanded, num_generated
 
     def make_move(self, turn: Combatant):
-        if turn.team == 'player':
+        if self.current_state.children is None:
+            return 'terminal'
+        elif turn.team == 'player':
             (action, target) = self.current_state.choose_maximum_utility_child()
         else:
             (action, target) = self.current_state.choose_minimum_utility_child()
-        self.current_state = action.perform(target)
+        self.combat_log.append((self.current_state, turn, action, target))
+        print(self.current_state)
+        print(turn, 'taking action', action, 'against', target)
+        self.current_state = action.perform(target, self.current_state)
+
+        combatants_alive = set(filter(lambda x: x != 0,
+                                      [c[0] if c[1].hp > 0 else 0 for c in
+                                       self.current_state.combatant_states.items()]))
+        for c in self.turn_order:
+            if c not in combatants_alive:
+                self.turn_order.remove(c)
+
+        print()
 
     def play(self):
-        pass
+        turn_index = 0
+        while self.current_state.outcome == 0:
+            turn = self.turn_order[turn_index]
+            self.expand_subtree(self.current_state, turn, 3)
+            self.make_move(turn)
+            turn_index = (turn_index + 1) % len(self.turn_order)
+
+        print(self.current_state)
+        if self.current_state.outcome == 1:
+            print('Players win!')
+        elif self.current_state.outcome == -1:
+            print('Enemies win!')
+        else:
+            print('uh oh')

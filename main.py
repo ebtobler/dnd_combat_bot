@@ -1,5 +1,7 @@
-from dndbot.characters.players.character_creator import CharacterCreator
+from dndbot.expectimax.expectimax import Expectimax
+from test._dnd_utils.dnd_utils import DndUtils
 
 if __name__ == '__main__':
-    new_character = CharacterCreator.get_stats_from_user()
-    CharacterCreator.dump_character_to_json(new_character)
+    players, enemies = DndUtils.two_players_two_enemies_two_attacks()
+    expectimax = Expectimax(players, enemies)
+    expectimax.play()

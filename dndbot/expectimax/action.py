@@ -10,5 +10,5 @@ class Action(ABC):
         pass
 
     @abstractmethod
-    def perform(self, target: Combatant):
+    def perform(self, target: Combatant, current_state: 'CombatState'):
         pass

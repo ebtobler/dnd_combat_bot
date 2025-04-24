@@ -33,3 +33,6 @@ class CombatantState:
         self.name = name
         self.hp = hp
         self.spell_slots = spell_slots
+
+    def __repr__(self):
+        return str(self.hp) + ' hp'

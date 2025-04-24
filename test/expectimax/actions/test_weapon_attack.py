@@ -24,6 +24,13 @@ class TestWeaponAttack(TestCase):
         expected = 3.5 + 1 + 2.5 * 2 + 1
         self.assertEqual(expected, result)
 
+    def test_average_damage_with_multiple_dice(self):
+        damage = tuple([DamageData((2, D6), 2, 'slashing')])
+        attack = WeaponAttack('Melee', 2, damage)
+        result = attack.average_damage()
+        expected = 2 * 3.5 + 2
+        self.assertEqual(expected, result)
+
     def test_generate_states(self):
         damage = tuple([DamageData((1, D6), 1, 'untyped')])
         attack = WeaponAttack('Melee', 4, damage)

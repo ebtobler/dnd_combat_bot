@@ -11,13 +11,19 @@ class CombatState:
     combatant_states: dict[Combatant: CombatantState]
     children: list[tuple[Action, Combatant, list[tuple[float, "CombatState"]]]] or None
     outcome: int
-    player_w = 5
-    enemy_w = 3
+    player_w = 130
+    enemy_w = 100
 
     def __init__(self, combatant_states: dict[Combatant: CombatantState]):
         self.children = None
         self.outcome = 0
         self.combatant_states = combatant_states
+
+    def __repr__(self):
+        if self.children is None:
+            return str(self.combatant_states) + ', 0 children'
+        else:
+            return str(self.combatant_states) + ', ' + str(len(self.children)) + ' children'
 
     """
     There are a few different utility functions I've come up with:
@@ -97,11 +103,11 @@ class CombatState:
                                      for c in self.combatant_states.items()]))
 
         if len(players_alive) == 0:
-            self.outcome = 1
-            return 1
-        elif len(enemies_alive) == 0:
             self.outcome = -1
             return -1
+        elif len(enemies_alive) == 0:
+            self.outcome = 1
+            return 1
 
         children = {}
         actions = current_turn.actions

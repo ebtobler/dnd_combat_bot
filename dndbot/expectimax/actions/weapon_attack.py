@@ -14,8 +14,6 @@ class WeaponAttack(Action, ABC):
         self.weapon_type = weapon_type
         self.hit = hit
         self.damage = damage
-        self.hit_state = None
-        self.miss_state = None
 
     def __eq__(self, other):
         return isinstance(other, WeaponAttack) \
@@ -37,8 +35,6 @@ class WeaponAttack(Action, ABC):
             success_state.combatant_states[target].hp = 0
         hit_outcome = (chance_of_success, success_state)
         miss_outcome = (1 - chance_of_success, CombatState(deepcopy(current_state.combatant_states)))
-        self.hit_state = hit_outcome[1]
-        self.miss_state = miss_outcome[1]
         return [hit_outcome, miss_outcome]
 
     def average_damage(self):
@@ -52,10 +48,15 @@ class WeaponAttack(Action, ABC):
             return 0.95
         return hit_chance
 
-    def perform(self, target: Combatant):
-        assert(self.hit_state is not None and self.miss_state is not None)
+    def perform(self, target: Combatant, current_state: CombatState):
         attack_roll = next(iter(D20.roll(1))) + self.hit
         if attack_roll >= target.ac:
-            return self.hit_state
+            print('Hit!')
+            success_state = CombatState(deepcopy(current_state.combatant_states))
+            success_state.combatant_states[target].hp -= self.average_damage()
+            if success_state.combatant_states[target].hp <= 0:
+                success_state.combatant_states[target].hp = 0
+            return success_state
         else:
-            return self.miss_state
+            print('Miss!')
+            return CombatState(current_state.combatant_states)
