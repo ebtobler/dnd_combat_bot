@@ -12,24 +12,16 @@ from dndbot.dice.dice import D6, D4
 class TestWeaponAttack(TestCase):
 
     def test_hit_chance(self):
-        attack = WeaponAttack('untyped', 5, [])
+        attack = WeaponAttack('untyped', 5, tuple([DamageData((1, D6), 1, 'untyped')]))
         target = EnemyCharacter({'AC': 14})
         result = attack.hit_chance(target)
         self.assertEqual(.6, result)
 
     def test_average_damage(self):
-        damage = [DamageData((1, D6), 1, 'untyped'), DamageData((2, D4), 1, 'force')]
+        damage = tuple([DamageData((1, D6), 1, 'untyped'), DamageData((2, D4), 1, 'force')])
         attack = WeaponAttack('untyped', 0, damage)
         result = attack.average_damage()
         expected = 3.5 + 1 + 2.5 * 2 + 1
-        self.assertEqual(expected, result)
-
-    def test_average_outcome(self):
-        damage = [DamageData((1, D6), 1, 'untyped'), DamageData((2, D4), 1, 'force')]
-        attack = WeaponAttack('untyped', 4, damage)
-        target = EnemyCharacter({'AC': 14})
-        result = attack.average_outcome(target)
-        expected = attack.hit_chance(target) * (3.5 + 1 + 2.5 * 2 + 1)
         self.assertEqual(expected, result)
 
     def test_generate_states(self):
@@ -48,3 +40,6 @@ class TestWeaponAttack(TestCase):
         expected = [(hit_chance, hit_state), (miss_chance, miss_state)]
         result = attack.generate_states(current_state, target)
         self.assertEqual(expected, result)
+
+    def test_perform(self):
+        pass

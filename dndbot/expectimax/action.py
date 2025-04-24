@@ -10,5 +10,5 @@ class Action(ABC):
         pass
 
     @abstractmethod
-    def average_outcome(self, target: Combatant):
+    def perform(self, target: Combatant):
         pass

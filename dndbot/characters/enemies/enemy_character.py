@@ -1,4 +1,5 @@
 from dndbot.characters.combatant import Combatant
+from dndbot.characters.players.player_character import PlayerCharacter
 from dndbot.dice.dice import D20
 
 
@@ -25,6 +26,9 @@ class EnemyCharacter(Combatant):
 
     def __eq__(self, other):
         return isinstance(other, EnemyCharacter) and self.name == other.name
+
+    def __lt__(self, other):
+        return isinstance(other, Combatant) and self.ability_scores['DEX'] < other.ability_scores['DEX']
 
     def __hash__(self):
         return hash(self.name)

@@ -26,6 +26,9 @@ class PlayerCharacter(Combatant):
     def __eq__(self, other):
         return isinstance(other, PlayerCharacter) and self.name == other.name
 
+    def __lt__(self, other):
+        return isinstance(other, Combatant) and self.ability_scores['DEX'] < other.ability_scores['DEX']
+
     def __hash__(self):
         return hash(self.name)
 

@@ -1,8 +1,9 @@
 from abc import abstractmethod
 from dataclasses import dataclass
-from typing import Protocol
+from typing import Protocol, runtime_checkable
 
 
+@runtime_checkable
 class Combatant(Protocol):
 
     team: str

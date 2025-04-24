@@ -41,6 +41,20 @@ class TestExpectimax(TestCase):
         expected_order = [players[0], players[1], enemies[0], enemies[1]]
         self.assertEqual(b.turn_order, expected_order)
 
+    @patch.object(D20, 'roll', return_value=[10])
+    def test_initiative_with_equal_rolls(self, mock_d20):
+        players = [
+            PlayerCharacter({'name': 'player1', 'Initiative': 1, 'Ability_Scores': {'DEX': 3}}),
+            PlayerCharacter({'name': 'player2', 'Initiative': 1, 'Ability_Scores': {'DEX': 2}}),
+        ]
+        enemies = [
+            EnemyCharacter({'name': 'enemy1', 'Initiative': 1, 'Ability_Scores': {'DEX': 1}}),
+            EnemyCharacter({'name': 'enemy2', 'Initiative': 1, 'Ability_Scores': {'DEX': 0}}),
+        ]
+        b = Expectimax(players, enemies)
+        expected_order = [players[0], players[1], enemies[0], enemies[1]]
+        self.assertEqual(b.turn_order, expected_order)
+
     def test_expand_subtree_does_not_generate_children_for_terminal_nodes(self):
         player, enemy = DndUtils.single_player_and_enemy()
         enemy[0].hp_max = 3
@@ -48,6 +62,16 @@ class TestExpectimax(TestCase):
         num_expanded, num_generated = exp.expand_subtree(exp.root, player[0], 2)
         self.assertEqual(3, num_expanded)
         self.assertEqual(12, num_generated)
+
+    def test_expand_subtree_with_nonterminal_leaves(self):
+        players, enemies = DndUtils.two_players_two_enemies_two_attacks()
+        exp = Expectimax(players, enemies)
+        num_expanded, num_generated = exp.expand_subtree(exp.root, players[0], 2)
+
+        expected_expanded = 1 + 2 * 2 * 2  # branching factor = 2 actions * 2 targets * 2 outcomes
+        expected_generated = expected_expanded * 2 * 2 * 2
+        self.assertEqual(expected_expanded, num_expanded)
+        self.assertEqual(expected_generated, num_generated)
 
     def test_choose_max_child_with_subtree(self):
         player, enemy = DndUtils.single_player_and_enemy()

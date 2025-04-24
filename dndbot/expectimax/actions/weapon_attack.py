@@ -1,6 +1,7 @@
 from abc import ABC
 from copy import deepcopy
 
+from dndbot.dice.dice import D20
 from dndbot.expectimax.action import Action
 from dndbot.expectimax.actions.damage_data import DamageData
 from dndbot.expectimax.combat_state import CombatState
@@ -13,6 +14,8 @@ class WeaponAttack(Action, ABC):
         self.weapon_type = weapon_type
         self.hit = hit
         self.damage = damage
+        self.hit_state = None
+        self.miss_state = None
 
     def __eq__(self, other):
         return isinstance(other, WeaponAttack) \
@@ -34,10 +37,9 @@ class WeaponAttack(Action, ABC):
             success_state.combatant_states[target].hp = 0
         hit_outcome = (chance_of_success, success_state)
         miss_outcome = (1 - chance_of_success, deepcopy(current_state))
+        self.hit_state = hit_outcome
+        self.miss_state = miss_outcome
         return [hit_outcome, miss_outcome]
-
-    def average_outcome(self, target: Combatant):
-        return self.hit_chance(target) * self.average_damage()
 
     def average_damage(self):
         return sum([d.average_damage() for d in self.damage])
@@ -49,3 +51,11 @@ class WeaponAttack(Action, ABC):
         elif hit_chance > 0.95:
             return 0.95
         return hit_chance
+
+    def perform(self, target: Combatant):
+        assert(self.hit_state is not None and self.miss_state is not None)
+        attack_roll = next(iter(D20.roll(1))) + self.hit
+        if attack_roll >= target.ac:
+            return self.hit_state
+        else:
+            return self.miss_state
