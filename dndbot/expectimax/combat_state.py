@@ -87,8 +87,7 @@ class CombatState:
 
     def expand_children(self, current_turn: Combatant):
         if self.children is not None:
-            self.outcome = 0
-            return 0
+            return self.outcome
 
         players_alive = list(filter(lambda x: x > 0,
                                     [c[1].hp if c[0].team == 'player' else 0
@@ -114,6 +113,7 @@ class CombatState:
                     if self.combatant_states[t].hp > 0:
                         children[(action, t)] = action.generate_states(self, t)
         self.children = children
+        self.outcome = 0
         return 0
 
     def get_child_states(self):

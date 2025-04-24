@@ -1,3 +1,4 @@
+import time
 from unittest import TestCase
 from unittest.mock import patch
 
@@ -72,6 +73,25 @@ class TestExpectimax(TestCase):
         expected_generated = expected_expanded * 2 * 2 * 2
         self.assertEqual(expected_expanded, num_expanded)
         self.assertEqual(expected_generated, num_generated)
+
+    def test_expand_subtree_does_not_expand_same_nodes_twice(self):
+        players, enemies = DndUtils.two_players_two_enemies_two_attacks()
+        exp = Expectimax(players, enemies)
+
+        # start = time.perf_counter()
+        expanded_1, generated_1 = exp.expand_subtree(exp.root, players[0], 3)
+        # end = time.perf_counter()
+        # t1 = end - start
+
+        # start = time.perf_counter()
+        expanded_2, generated_2 = exp.expand_subtree(exp.root, players[0], 2)
+        # end = time.perf_counter()
+        # t2 = end - start
+
+        self.assertGreater(expanded_1, 0)
+        self.assertGreater(generated_1, expanded_1)
+        self.assertEqual(0, expanded_2)
+        self.assertEqual(0, generated_2)
 
     def test_choose_max_child_with_subtree(self):
         player, enemy = DndUtils.single_player_and_enemy()

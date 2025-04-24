@@ -31,14 +31,14 @@ class WeaponAttack(Action, ABC):
 
     def generate_states(self, current_state: CombatState, target: Combatant):
         chance_of_success = self.hit_chance(target)
-        success_state = deepcopy(current_state)
+        success_state = CombatState(deepcopy(current_state.combatant_states))
         success_state.combatant_states[target].hp -= self.average_damage()
         if success_state.combatant_states[target].hp <= 0:
             success_state.combatant_states[target].hp = 0
         hit_outcome = (chance_of_success, success_state)
-        miss_outcome = (1 - chance_of_success, deepcopy(current_state))
-        self.hit_state = hit_outcome
-        self.miss_state = miss_outcome
+        miss_outcome = (1 - chance_of_success, CombatState(deepcopy(current_state.combatant_states)))
+        self.hit_state = hit_outcome[1]
+        self.miss_state = miss_outcome[1]
         return [hit_outcome, miss_outcome]
 
     def average_damage(self):
