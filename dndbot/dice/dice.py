@@ -21,6 +21,10 @@ class Dice(Protocol):
     def __str__(cls):
         return cls.__repr__()
 
+    @classmethod
+    def __hash__(cls):
+        return hash(cls.max) + hash(cls.average_roll)
+
 
 class D100(Dice):
 

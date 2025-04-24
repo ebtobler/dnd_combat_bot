@@ -20,6 +20,9 @@ class DamageData:
     def __str__(self):
         return self.__repr__()
 
+    def __hash__(self):
+        return hash(self.dice) + hash(self.mod) + hash(self.dmg_type)
+
     def roll_damage(self):
         return sum(self.dice[1].roll(self.dice[0])) + self.mod
 

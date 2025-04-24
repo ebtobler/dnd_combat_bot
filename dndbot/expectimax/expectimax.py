@@ -1,5 +1,6 @@
 from copy import copy
 
+from dndbot.dice.dice import D20
 from dndbot.expectimax.combat_state import CombatState
 from dndbot.characters.combatant import CombatantState, Combatant
 from dndbot.characters.enemies.enemy_character import EnemyCharacter
@@ -27,14 +28,21 @@ class Expectimax:
             for state in current_layer:
                 state.expand_children(self.turn_order[c % len(self.turn_order)])
                 if state.children is not None:
-                    for option in state.children:
-                        successor_states = [prob_state_pair[1] for prob_state_pair in option[2]]
+                    for (action, states) in state.children.items():
+                        successor_states = [prob_state_pair[1] for prob_state_pair in states]
                         next_layer.extend(successor_states)
                     num_expanded += 1
             num_generated += len(next_layer)
             current_layer = copy(next_layer)
             next_layer.clear()
         return num_expanded, num_generated
+
+    def make_move(self, turn: Combatant):
+        if turn.team == 'player':
+            action = self.root.choose_maximum_utility_child()
+        else:
+            action = self.root.choose_minimum_utility_child()
+        print(action[0])
 
     def play(self):
         pass

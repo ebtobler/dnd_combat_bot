@@ -9,7 +9,7 @@ from dndbot.characters.combatant import Combatant
 
 class WeaponAttack(Action, ABC):
 
-    def __init__(self, weapon_type: str, hit: int, damage: list[DamageData]):
+    def __init__(self, weapon_type: str, hit: int, damage: tuple[DamageData]):
         self.weapon_type = weapon_type
         self.hit = hit
         self.damage = damage
@@ -23,6 +23,9 @@ class WeaponAttack(Action, ABC):
     def __repr__(self):
         return f'{self.weapon_type} Weapon Attack: {self.hit} to hit. Hit: {self.damage} damage'
 
+    def __hash__(self):
+        return hash(self.weapon_type) + hash(self.hit) + hash(self.damage)
+
     def generate_states(self, current_state: CombatState, target: Combatant):
         chance_of_success = self.hit_chance(target)
         success_state = deepcopy(current_state)
@@ -31,7 +34,7 @@ class WeaponAttack(Action, ABC):
             success_state.combatant_states[target].hp = 0
         hit_outcome = (chance_of_success, success_state)
         miss_outcome = (1 - chance_of_success, deepcopy(current_state))
-        return self, target, [hit_outcome, miss_outcome]
+        return [hit_outcome, miss_outcome]
 
     def average_outcome(self, target: Combatant):
         return self.hit_chance(target) * self.average_damage()

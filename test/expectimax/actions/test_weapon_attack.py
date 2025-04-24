@@ -33,7 +33,7 @@ class TestWeaponAttack(TestCase):
         self.assertEqual(expected, result)
 
     def test_generate_states(self):
-        damage = [DamageData((1, D6), 1, 'untyped')]
+        damage = tuple([DamageData((1, D6), 1, 'untyped')])
         attack = WeaponAttack('Melee', 4, damage)
         target = EnemyCharacter({'name': 'e1', 'HP_Max': 12, 'AC': 12})
         combatant_state = {target: CombatantState(target.name, target.hp_max, target.spell_slot_max)}
@@ -45,6 +45,6 @@ class TestWeaponAttack(TestCase):
         miss_chance = 1 - hit_chance
         miss_state = deepcopy(current_state)
 
-        expected = (WeaponAttack('Melee', 4, damage), target, [(hit_chance, hit_state), (miss_chance, miss_state)])
+        expected = [(hit_chance, hit_state), (miss_chance, miss_state)]
         result = attack.generate_states(current_state, target)
         self.assertEqual(expected, result)
