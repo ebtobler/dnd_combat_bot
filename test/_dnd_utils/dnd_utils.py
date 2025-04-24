@@ -1,6 +1,6 @@
 from dndbot.characters.enemies.enemy_character import EnemyCharacter
 from dndbot.characters.players.player_character import PlayerCharacter
-from dndbot.dice.dice import D6, D12, D4, D10, D8
+from dndbot.dice.dice import D6, D12, D4, D8
 from dndbot.expectimax.actions.damage_data import DamageData
 from dndbot.expectimax.actions.weapon_attack import WeaponAttack
 from dndbot.expectimax.combat_state import CombatState

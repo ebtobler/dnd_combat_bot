@@ -1,5 +1,4 @@
 from dndbot.characters.combatant import Combatant
-from dndbot.characters.players.player_character import PlayerCharacter
 from dndbot.dice.dice import D20
 
 
