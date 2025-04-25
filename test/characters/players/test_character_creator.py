@@ -1,6 +1,5 @@
 from os import path, remove
 from unittest import TestCase
-from unittest.mock import patch
 
 from dndbot.characters.players.character_creator import CharacterCreator
 from dndbot.characters.players.player_character import PlayerCharacter

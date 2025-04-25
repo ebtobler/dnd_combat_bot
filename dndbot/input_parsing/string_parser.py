@@ -50,6 +50,7 @@ class StringParser:
         damage_instances = []
         for dmg in damage_instances_str:
             damage_instances.append(StringParser.parse_damage_string(dmg))
+        damage_instances = tuple(damage_instances)
         return weapon_type, hit_mod, damage_instances
 
     """
