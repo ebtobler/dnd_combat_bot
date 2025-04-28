@@ -31,7 +31,7 @@ class TestStringParser(TestCase):
         weapon_type, hit, damage = StringParser.parse_player_attack_string(attack_string)
         first_damage = DamageData((2, D6), 3, 'slashing')
         second_damage = DamageData((1, D4), 1, 'fire')
-        expected_damage = [first_damage, second_damage]
+        expected_damage = tuple([first_damage, second_damage])
         self.assertEqual('Melee', weapon_type)
         self.assertEqual(3, hit)
         self.assertEqual(expected_damage, damage)
@@ -41,7 +41,7 @@ class TestStringParser(TestCase):
         weapon_type, hit, damage = StringParser.parse_player_attack_string(attack_string)
         first_damage = DamageData((2, D6), 3, 'slashing')
         second_damage = DamageData((1, D4), 1, 'fire')
-        expected_damage = [first_damage, second_damage]
+        expected_damage = (first_damage, second_damage)
         self.assertEqual('Melee', weapon_type)
         self.assertEqual(3, hit)
         self.assertEqual(expected_damage, damage)

@@ -9,8 +9,8 @@ class EnemyCharacter(Combatant):
     def __init__(self, stats: dict):
         self.team = 'enemy'
         self.name = stats.get('name')
-        self.ac = stats.get('Armor Class')
-        self.hp_max = stats.get('Hit Points')
+        self.ac = stats.get('AC')
+        self.hp_max = stats.get('HP_Max')
         self.initiative = stats.get('Initiative')
         self.speed = stats.get('Speed')
         self.ability_scores = stats.get('Ability_Scores')
@@ -23,7 +23,8 @@ class EnemyCharacter(Combatant):
                     for attack_str in stats['Actions']['Weapon_Attacks']:
                         weapon_attacks.append(WeaponAttack(*StringParser.parse_player_attack_string(attack_str)))
         self.actions = stats.get('Actions')
-        self.actions['Weapon_Attacks'] = weapon_attacks
+        if self.actions is not None:
+            self.actions['Weapon_Attacks'] = weapon_attacks
 
         self.spells = stats.get('Spells')
         self.spell_slot_max = stats.get('Spell_Slots')

@@ -11,7 +11,7 @@ from stats.stats_helpers import StatsHelpers
 class TestReadEnemyJson(TestCase):
 
     def test_goblin_json(self):
-        goblin_file = path.join(StatsHelpers.stats_folder_path(), 'enemies', 'compatible', 'goblin.json')
+        goblin_file = path.join(StatsHelpers.stats_folder_path(), 'enemies', 'goblin.json')
         goblin = JsonReader.parse_enemy_character(goblin_file)
 
         scimitar_damage = tuple([DamageData((1, D6), 2, 'slashing')])

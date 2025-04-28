@@ -13,7 +13,7 @@ class TestWeaponAttack(TestCase):
 
     def test_hit_chance(self):
         attack = WeaponAttack('untyped', 5, tuple([DamageData((1, D6), 1, 'untyped')]))
-        target = EnemyCharacter({'AC': 14})
+        target = EnemyCharacter({'AC': 14, 'Initiative': 0})
         result = attack.hit_chance(target)
         self.assertEqual(.6, result)
 
@@ -34,7 +34,7 @@ class TestWeaponAttack(TestCase):
     def test_generate_states(self):
         damage = tuple([DamageData((1, D6), 1, 'untyped')])
         attack = WeaponAttack('Melee', 4, damage)
-        target = EnemyCharacter({'name': 'e1', 'HP_Max': 12, 'AC': 12})
+        target = EnemyCharacter({'name': 'e1', 'HP_Max': 12, 'AC': 12, 'Initiative': 0})
         combatant_state = {target: CombatantState(target.name, target.hp_max, target.spell_slot_max)}
         current_state = CombatState(combatant_state)
 

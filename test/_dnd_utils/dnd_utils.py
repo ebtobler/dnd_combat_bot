@@ -18,15 +18,15 @@ class DndUtils:
                                    'Actions': {'Weapon_Attacks': [player_attack]},
                                    'Initiative': 20, })]
         enemy = [EnemyCharacter({'name': 'e1', 'HP_Max': 10, 'AC': 12,
-                                 'Actions': {'Weapon_Attacks': [enemy_attack]},
                                  'Initiative': 0})]
+        enemy[0].actions = {'Weapon_Attacks': [enemy_attack]},
         return player, enemy
 
     @staticmethod
     def single_player_and_enemy():
         player_damage_1 = tuple([DamageData((1, D12), 1, 'bludgeoning')])
         player_attack_1 = WeaponAttack('Melee', 4, player_damage_1)
-        player_damage_2 = tuple([DamageData((1, D6), 2, 'piercing')])
+        player_damage_2 = tuple([DamageData((1, D4), 2, 'piercing')])
         player_attack_2 = WeaponAttack('Melee', 5, player_damage_2)
 
         enemy_damage_1 = tuple([DamageData((1, D6), 3, 'slashing')])
@@ -35,11 +35,11 @@ class DndUtils:
         enemy_attack_2 = WeaponAttack('Ranged', 6, enemy_damage_2)
 
         player = [PlayerCharacter({'name': 'p1', 'HP_Max': 20, 'AC': 16,
-                                   'Actions': {'Weapon_Attacks': [player_attack_1, player_attack_2]},
                                    'Initiative': 20, 'Ability_Scores': {'DEX': 3}})]
+        player[0].actions = {'Weapon_Attacks': [player_attack_1, player_attack_2]}
         enemy = [EnemyCharacter({'name': 'e1', 'HP_Max': 10, 'AC': 12,
-                                 'Actions': {'Weapon_Attacks': [enemy_attack_1, enemy_attack_2]},
                                  'Initiative': 0, 'Ability_Scores': {'DEX': 2}})]
+        enemy[0].actions = {'Weapon_Attacks': [enemy_attack_1, enemy_attack_2]}
         return player, enemy
 
     @staticmethod
@@ -72,12 +72,12 @@ class DndUtils:
                                     'Initiative': 20, 'Ability_Scores': {'DEX': 2}})
                    ]
         enemies = [EnemyCharacter({'name': 'e1', 'HP_Max': 10, 'AC': 12,
-                                   'Actions': {'Weapon_Attacks': [enemy_1_attack_1, enemy_1_attack_2]},
                                    'Initiative': 0, 'Ability_Scores': {'DEX': 1}}),
                    EnemyCharacter({'name': 'e2', 'HP_Max': 20, 'AC': 15,
-                                   'Actions': {'Weapon_Attacks': [enemy_2_attack_1, enemy_2_attack_2]},
                                    'Initiative': 0, 'Ability_Scores': {'DEX': 0}})
                    ]
+        enemies[0].actions = {'Weapon_Attacks': [enemy_1_attack_1, enemy_1_attack_2]}
+        enemies[1].actions = {'Weapon_Attacks': [enemy_2_attack_1, enemy_2_attack_2]}
         return players, enemies
 
     @staticmethod

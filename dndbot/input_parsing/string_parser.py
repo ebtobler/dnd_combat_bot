@@ -13,8 +13,8 @@ class StringParser:
     """
     @staticmethod
     def str_to_dice_function(dice_str: str):
-        n_str = search(r'\d+', dice_str).group()
-        die = dice_str.split(n_str)[1]
+        n_str, die = dice_str.split('d')
+        die = 'd' + die
         n = int(n_str)
 
         if die == 'd100':

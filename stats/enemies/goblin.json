@@ -1,7 +1,7 @@
 {
     "name": "Goblin",
-    "Armor Class": 15,
-    "Hit Points": 7,
+    "AC": 15,
+    "HP_Max": 7,
     "Speed": 30,
     "Ability_Scores":
     {

@@ -23,9 +23,9 @@ class TestJsonReader(TestCase):
         expected_saving_throws = {"STR": 5, "DEX": 2, "CON": 5, "INT": -1, "WIS": 1, "CHA": 0}
         expected_actions = {
             "Weapon_Attacks": [
-                WeaponAttack('Melee', 3, [DamageData((1, D6), 3, 'slashing')]),
-                WeaponAttack('Melee', 5, [DamageData((1, D4), 3, 'bludgeoning')]),
-                WeaponAttack('Ranged', 3, [DamageData((1, D6), 1, 'piercing')]),
+                WeaponAttack('Melee', 3, tuple([DamageData((1, D6), 3, 'slashing')])),
+                WeaponAttack('Melee', 5, tuple([DamageData((1, D4), 3, 'bludgeoning')])),
+                WeaponAttack('Ranged', 3, tuple([DamageData((1, D6), 1, 'piercing')])),
             ]
         }
         expected_spells = {

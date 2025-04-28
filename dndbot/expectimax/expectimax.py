@@ -1,4 +1,4 @@
-from copy import copy
+from copy import copy, deepcopy
 
 from dndbot.expectimax.combat_state import CombatState
 from dndbot.characters.combatant import CombatantState, Combatant
@@ -9,7 +9,16 @@ from dndbot.characters.players.player_character import PlayerCharacter
 class Expectimax:
 
     def __init__(self, players: list[PlayerCharacter], enemies: list[EnemyCharacter]):
-        self.combatants = players + enemies
+        self.combatants = []
+        for c in players + enemies:
+            occurrences = self.combatants.count(c)
+            if occurrences:
+                c_copy = deepcopy(c)
+                c_copy.name += f'_{occurrences}'
+                self.combatants.append(c_copy)
+            else:
+                self.combatants.append(c)
+
         initiatives = [(combatant.roll_initiative(), combatant) for combatant in self.combatants]
         initiatives.sort(reverse=True)
         self.turn_order = [combatant[1] for combatant in initiatives]
