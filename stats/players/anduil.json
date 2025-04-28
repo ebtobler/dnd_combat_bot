@@ -1,0 +1,32 @@
+{
+  "name": "Anduil",
+  "AC": 14,
+  "HP_Max": 18,
+  "Initiative": 4,
+  "Speed": 30,
+
+  "Ability_Scores":
+  {
+    "STR": 8, "STR_mod": -1,
+    "DEX": 18, "DEX_mod": 4,
+    "CON": 16, "CON_mod": 3,
+    "INT": 16, "INT_mod": 3,
+    "WIS": 8, "WIS_mod": -1,
+    "CHA": 8, "CHA_mod": -1
+  },
+
+  "Saving_Throws":
+  {
+    "STR": 5, "DEX": 2,  "CON": 5,  "INT": -1,  "WIS": 1,  "CHA": 0
+  },
+
+  "Actions":
+  {
+    "Weapon_Attacks":
+    [
+        "Melee Weapon Attack: +6 to hit, reach 5 ft. one target. Hit: 1d8 + 4 piercing",
+        "Melee Weapon Attack: +6 to hit, reach 5 ft. one target. Hit: 1d4 + 4 piercing",
+        "Ranged Weapon Attack: +6 to hit, reach 20 ft. one target. Hit: 1d6 + 4 piercing"
+    ]
+  }
+}
