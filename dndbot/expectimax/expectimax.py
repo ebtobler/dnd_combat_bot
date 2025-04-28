@@ -82,6 +82,11 @@ class Expectimax:
         if verbose:
             print()
 
+        next_turn_idx = self.turn_order.index(turn) + 1
+        if next_turn_idx >= len(self.turn_order):
+            next_turn_idx = 0
+        return next_turn_idx
+
     def play(self, verbose: bool = True):
         turn_index = 0
         expanded = 0
@@ -90,16 +95,13 @@ class Expectimax:
         rounds = 0
         while self.current_state.outcome == 0:
             turn = self.turn_order[turn_index]
-            turn_index = (turn_index + 1) % len(self.turn_order)
             ex, gen = self.expand_subtree(self.current_state, turn, 3)
             expanded += ex
             generated += gen
-            self.make_move(turn, verbose=verbose)
+            turn_index = self.make_move(turn, verbose=verbose)
             turns_taken += 1
             if turn_index == 0:
                 rounds += 1
-            if turn_index >= len(self.turn_order):
-                turn_index = len(self.turn_order) - 1
 
         if verbose:
             print(self.current_state)

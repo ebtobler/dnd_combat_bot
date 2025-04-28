@@ -6,12 +6,12 @@ from run_cases.setup_helpers import SetupHelpers
 class RunCases:
     @staticmethod
     def run():
-        # RunCases.default()
-        RunCases.average_outcome(20)
+        RunCases.default()
+        # RunCases.average_outcome(20)
 
     @staticmethod
     def default():
-        players = [SetupHelpers.jorge()]
+        players = [SetupHelpers.barbarian()]
         enemies = [SetupHelpers.goblin(), SetupHelpers.goblin()]
 
         if len(players) == 0 and len(enemies) == 0:
@@ -55,9 +55,11 @@ class AverageOutcomeStats:
         goblin = SetupHelpers.goblin()
         one_one = ([jorge], [goblin])
         one_two = ([jorge], [goblin, goblin])
+        two_two = ([jorge, anduil], [goblin, goblin])
+        two_three = ([jorge, anduil], [goblin, goblin, goblin])
         two_four = ([jorge, anduil], [goblin, goblin, goblin, goblin])
         four_four = ([jorge, jorge, anduil, anduil], [goblin, goblin, goblin, goblin])
-        return [one_one, one_two, two_four, four_four]
+        return [one_one, one_two, two_two, two_three, two_four, four_four]
 
     @staticmethod
     def run(players, enemies, trials: int):

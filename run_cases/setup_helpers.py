@@ -25,3 +25,10 @@ class SetupHelpers:
             path.join(StatsHelpers.stats_folder_path(), 'enemies', 'goblin.json')
         )
         return goblin
+
+    @staticmethod
+    def barbarian():
+        barb = JsonReader.parse_player_character(
+            path.join(StatsHelpers.stats_folder_path(), 'players', 'barbarian.json')
+        )
+        return barb
