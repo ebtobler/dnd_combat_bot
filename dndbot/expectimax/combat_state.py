@@ -25,19 +25,27 @@ class CombatState:
         else:
             return str(self.combatant_states) + ', ' + str(len(self.children)) + ' children'
 
-    """
-    There are a few different utility functions I've come up with:
-    u1 = total_player_health - total_enemy_health
-    u2 = total_player_health + w * players_alive - total_enemy_health - w * enemies_alive
-    u3 = damage_dealt_by_players - damage_dealt_by_enemies
-    u4 = damage_dealt_by_players + w * players_alive - damage_dealt_by_enemies - w * enemies_alive
-    u5 = total_player_health / total_enemy_health 
-    damage and health might be equivalent
-    """
+    def player_win(self):
+        players = list(filter(lambda x: x > 0,
+                              [c[1].hp if c[0].team == 'player' else 0 for c in self.combatant_states.items()]))
+        player_health = sum(players)
+        player_health += self.player_w * self.player_w * len(self.combatant_states)
+        return player_health
+
+    def enemy_win(self):
+        enemies = list(filter(lambda x: x > 0,
+                              [c[1].hp if c[0].team == 'enemy' else 0 for c in self.combatant_states.items()]))
+        enemy_health = sum(enemies)
+        enemy_health += -1 * self.enemy_w * self.enemy_w * len(self.combatant_states)
+        return enemy_health
 
     def utility(self):
-        if self.children is None or len(self.children) == 0:
+        if self.outcome == 0 and (self.children is None or len(self.children) == 0):
             return self.weighted_health_utility()
+        elif self.outcome == 1:
+            return self.player_win()
+        elif self.outcome == -1:
+            return self.enemy_win()
         else:
             u = 0
             child_states = [state for state_list in self.children.values() for state in state_list]

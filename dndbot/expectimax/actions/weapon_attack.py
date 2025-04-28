@@ -41,7 +41,7 @@ class WeaponAttack(Action, ABC):
         return sum([d.average_damage() for d in self.damage])
 
     def hit_chance(self, target: Combatant):
-        hit_chance = 1 - (target.ac - self.hit - 1) / 20
+        hit_chance = (20 + 1 - (target.ac - self.hit)) / 20
         if hit_chance < 0.05:
             return 0.05
         elif hit_chance > 0.95:

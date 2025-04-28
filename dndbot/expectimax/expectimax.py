@@ -58,7 +58,10 @@ class Expectimax:
         elif turn.team == 'player':
             (action, target) = self.current_state.choose_maximum_utility_child()
         else:
-            (action, target) = self.current_state.choose_minimum_utility_child()
+            try:
+                (action, target) = self.current_state.choose_minimum_utility_child()
+            except:
+                (action, target) = self.current_state.choose_minimum_utility_child()
         self.combat_log.append((self.current_state, turn, action, target))
         print(self.current_state)
         print(turn, 'taking action', action, 'against', target)
