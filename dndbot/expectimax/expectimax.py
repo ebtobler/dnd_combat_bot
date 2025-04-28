@@ -58,10 +58,7 @@ class Expectimax:
         elif turn.team == 'player':
             (action, target) = self.current_state.choose_maximum_utility_child()
         else:
-            try:
-                (action, target) = self.current_state.choose_minimum_utility_child()
-            except:
-                (action, target) = self.current_state.choose_minimum_utility_child()
+            (action, target) = self.current_state.choose_minimum_utility_child()
         self.combat_log.append((self.current_state, turn, action, target))
         print(self.current_state)
         print(turn, 'taking action', action, 'against', target)
@@ -78,11 +75,22 @@ class Expectimax:
 
     def play(self):
         turn_index = 0
+        expanded = 0
+        generated = 0
+        turns_taken = 0
+        rounds = 0
         while self.current_state.outcome == 0:
             turn = self.turn_order[turn_index]
-            self.expand_subtree(self.current_state, turn, 3)
-            self.make_move(turn)
             turn_index = (turn_index + 1) % len(self.turn_order)
+            ex, gen = self.expand_subtree(self.current_state, turn, 3)
+            expanded += ex
+            generated += gen
+            self.make_move(turn)
+            turns_taken += 1
+            if turn_index == 0:
+                rounds += 1
+            if turn_index >= len(self.turn_order):
+                turn_index = len(self.turn_order) - 1
 
         print(self.current_state)
         if self.current_state.outcome == 1:
@@ -91,3 +99,5 @@ class Expectimax:
             print('Enemies win!')
         else:
             print('uh oh')
+        print(f'{turns_taken - 1} turns taken, {rounds} rounds played')
+        print(f'{expanded} nodes expanded, {generated} nodes generated')
