@@ -48,15 +48,17 @@ class WeaponAttack(Action, ABC):
             return 0.95
         return hit_chance
 
-    def perform(self, target: Combatant, current_state: CombatState):
+    def perform(self, target: Combatant, current_state: CombatState, verbose=True):
         attack_roll = next(iter(D20.roll(1))) + self.hit
         if attack_roll >= target.ac:
-            print('Hit!')
+            if verbose:
+                print('Hit!')
             success_state = CombatState(deepcopy(current_state.combatant_states))
             success_state.combatant_states[target].hp -= self.average_damage()
             if success_state.combatant_states[target].hp <= 0:
                 success_state.combatant_states[target].hp = 0
             return success_state
         else:
-            print('Miss!')
+            if verbose:
+                print('Miss!')
             return CombatState(current_state.combatant_states)

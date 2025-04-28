@@ -32,6 +32,7 @@ class Expectimax:
         self.root = CombatState(initial_states)
         self.current_state = self.root
         self.combat_log = []
+        self.outcome = 'none'
 
     def expand_subtree(self, node: CombatState, turn: Combatant, depth: int):
         num_expanded = 0
@@ -69,7 +70,7 @@ class Expectimax:
         if verbose:
             print(self.current_state)
             print(turn, 'taking action', action, 'against', target)
-        self.current_state = action.perform(target, self.current_state)
+        self.current_state = action.perform(target, self.current_state, verbose=verbose)
 
         combatants_alive = set(filter(lambda x: x != 0,
                                       [c[0] if c[1].hp > 0 else 0 for c in
@@ -78,7 +79,8 @@ class Expectimax:
             if c not in combatants_alive:
                 self.turn_order.remove(c)
 
-        print()
+        if verbose:
+            print()
 
     def play(self, verbose: bool = True):
         turn_index = 0
@@ -92,7 +94,7 @@ class Expectimax:
             ex, gen = self.expand_subtree(self.current_state, turn, 3)
             expanded += ex
             generated += gen
-            self.make_move(turn)
+            self.make_move(turn, verbose=verbose)
             turns_taken += 1
             if turn_index == 0:
                 rounds += 1
@@ -101,12 +103,11 @@ class Expectimax:
 
         if verbose:
             print(self.current_state)
-
-        if self.current_state.outcome == 1:
-            print('Players win!')
-        elif self.current_state.outcome == -1:
-            print('Enemies win!')
-        else:
-            print('uh oh')
+            if self.current_state.outcome == 1:
+                print('Players win!')
+            elif self.current_state.outcome == -1:
+                print('Enemies win!')
+            else:
+                print('uh oh')
 
         return turns_taken - 1, rounds, expanded, generated
