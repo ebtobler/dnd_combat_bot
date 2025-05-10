@@ -1,33 +1,64 @@
 import time
 
+from dndbot.characters.enemies.enemy_character import EnemyCharacter
+from dndbot.characters.players.player_character import PlayerCharacter
 from dndbot.expectimax.expectimax import Expectimax
 from run_cases.setup_helpers import SetupHelpers
+from stats.stats_helpers import StatsHelpers
+
 
 class RunCases:
     @staticmethod
     def run():
         RunCases.default()
-        # RunCases.average_outcome(20)
 
     @staticmethod
     def default():
-        players = [SetupHelpers.barbarian()]
-        enemies = [SetupHelpers.goblin(), SetupHelpers.goblin()]
+        players = SetupHelpers.get_player_characters_from_user()
+        enemies = SetupHelpers.get_enemy_characters_from_user()
 
         if len(players) == 0 and len(enemies) == 0:
             print("No players or enemies!")
+            return
         elif len(players) == 0:
             print("No players!")
+            return
         elif len(enemies) == 0:
             print("No enemies!")
+            return
 
-        expectimax = Expectimax(players, enemies)
-        turns_taken, rounds, expanded, generated = expectimax.play()
-        print(f'{turns_taken} turns taken, {rounds} rounds played')
-        print(f'{expanded} nodes expanded, {generated} nodes generated')
+        num_trials = -1
+        while num_trials < 1:
+            num_trials = int(input('Number of simulations to run (integer greater than 0): '))
+
+        if num_trials == 1:
+            expectimax = Expectimax(players, enemies)
+            turns_taken, rounds, expanded, generated = expectimax.play()
+            print(f'{turns_taken} turns taken, {rounds} rounds played')
+            print(f'{expanded} nodes expanded, {generated} nodes generated')
+        else:
+            RunCases.average_outcome(players, enemies, num_trials)
 
     @staticmethod
-    def average_outcome(trials: int):
+    def average_outcome(players: list[PlayerCharacter], enemies: list[EnemyCharacter], trials: int):
+        print('Players: ', end='')
+        print(players)
+        print('Enemies: ', end='')
+        print(enemies)
+        print('Trials:', trials)
+
+        avg_turns, avg_expanded, avg_generated, avg_time, player_winrate = \
+            AverageOutcomeStats.run(players, enemies, trials)
+
+        print(f'avg turns:           {avg_turns}')
+        print(f'avg nodes expanded:  {avg_expanded}')
+        print(f'avg nodes generated: {avg_generated}')
+        print(f'avg run time:        {avg_time} s')
+        print(f'player winrate:      {player_winrate * 100}%')
+        print()
+
+    @staticmethod
+    def average_performance(trials: int):
         cases = AverageOutcomeStats.combat_cases_incremental()[0:-1]
         for case in cases:
             players = case[0]

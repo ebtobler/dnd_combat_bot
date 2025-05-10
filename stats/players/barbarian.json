@@ -2,40 +2,29 @@
   "name": "Barbarian",
   "AC": 15,
   "HP_Max": 15,
-  "HP": 15,
-  "Temp_HP": 0,
   "Initiative": 2,
   "Speed": 30,
-  "Proficiency_Bonus": 2,
-  "Spell_DC": -1,
+
   "Ability_Scores": {
-    "STR": 16,
-    "STR_mod": 3,
-    "DEX": 14,
-    "DEX_mod": 2,
-    "CON": 16,
-    "CON_mod": 3,
-    "INT": 8,
-    "INT_mod": -1,
-    "WIS": 8,
-    "WIS_mod": -1,
-    "CHA": 8,
-    "CHA_mod": -1
+    "STR": 16, "STR_mod": 3,
+    "DEX": 14, "DEX_mod": 2,
+    "CON": 16, "CON_mod": 3,
+    "INT": 8, "INT_mod": -1,
+    "WIS": 8, "WIS_mod": -1,
+    "CHA": 8, "CHA_mod": -1
   },
+
   "Saving_Throws": {
-    "STR": 5,
-    "DEX": 2,
-    "CON": 5,
-    "INT": -1,
-    "WIS": -1,
-    "CHA": -1
+    "STR": 5, "DEX": 2, "CON": 5, "INT": -1, "WIS": -1, "CHA": -1
   },
+
   "Actions": {
     "Weapon_Attacks": [
       "Melee Weapon Attack: +5 to hit, reach 5 ft. one target. Hit: 2d6 + 3 slashing",
       "Melee Weapon Attack: +5 to hit, reach 5 ft. one target. Hit: 1d6 + 3 bludgeoning"
     ]
   },
+
   "Bonus_Actions": [
     "Rage."
   ]
