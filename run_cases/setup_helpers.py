@@ -10,7 +10,7 @@ class SetupHelpers:
     def get_player_characters_from_user():
         user_input = 'init'
         players = []
-        print("Creating players list, press 'Enter' to exit")
+        print("Creating players list, press 'Enter' to finalize")
         while user_input != '':
             StatsHelpers.display_available_players()
             print("Current players: ", end='')
@@ -31,7 +31,7 @@ class SetupHelpers:
     def get_enemy_characters_from_user():
         user_input = 'init'
         enemies = []
-        print("Creating enemies list, press 'Enter' to exit")
+        print("Creating enemies list, press 'Enter' to finalize")
         while user_input != '':
             StatsHelpers.display_available_enemies()
             print("Current enemies: ", end='')
