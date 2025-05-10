@@ -23,7 +23,7 @@ class CombatState:
         if self.children is None:
             return str(self.combatant_states) + ', 0 children'
         else:
-            return str(self.combatant_states) + ', ' + str(len(self.children)) + ' children'
+            return str(self.combatant_states)
 
     def player_win(self):
         players = list(filter(lambda x: x > 0,
