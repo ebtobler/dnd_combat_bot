@@ -1,0 +1,23 @@
+{
+    "name": "Kobold",
+    "AC": 12,
+    "HP_Max": 5,
+    "Speed": 30,
+    "Ability_Scores":
+    {
+        "STR": 7, "STR_mod": -2,
+        "DEX": 15, "DEX_mod": 2,
+        "CON": 9, "CON_mod": -1,
+        "INT": 8, "INT_mod": -1,
+        "WIS": 7, "WIS_mod": -2,
+        "CHA": 8, "CHA_mod": -1    
+    },
+    "Actions": 
+    {
+        "Weapon_Attacks": 
+        [
+            "Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 1d4 + 2 piercing damage.",
+            "Ranged Weapon Attack: +4 to hit, range 30/120 ft., one target. Hit: 1d4 + 2 bludgeoning damage."
+        ]
+    }
+}
